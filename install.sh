@@ -1267,7 +1267,7 @@ installV2Ray() {
 	if [[ "${coreInstallType}" != "2" && "${coreInstallType}" != "3" ]]; then
 		if [[ "${selectCoreType}" == "2" ]]; then
 
-			version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
+			version=$(curl -s https://api.github.com/repos/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
 		else
 			version=${v2rayCoreVersion}
 		fi
@@ -1351,11 +1351,11 @@ v2rayVersionManageMenu() {
 		echoContent yellow "2.不保证回退后一定可以正常使用"
 		echoContent yellow "3.如果回退的版本不支持当前的config，则会无法连接，谨慎操作"
 		echoContent skyBlue "------------------------Version-------------------------------"
-		curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}'
+		curl -s https://api.github.com/repos/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}'
 
 		echoContent skyBlue "--------------------------------------------------------------"
 		read -r -p "请输入要回退的版本:" selectV2rayVersionType
-		version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}' | grep "${selectV2rayVersionType}:" | awk -F "[:]" '{print $2}')
+		version=$(curl -s https://api.github.com/repos/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}' | grep "${selectV2rayVersionType}:" | awk -F "[:]" '{print $2}')
 		if [[ -n "${version}" ]]; then
 			updateV2Ray "${version}"
 		else
@@ -1421,7 +1421,7 @@ updateV2Ray() {
 		if [[ -n "$1" ]]; then
 			version=$1
 		else
-			version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
+			version=$(curl -s https://api.github.com/repos/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
 		fi
 		# 使用锁定的版本
 		if [[ -n "${v2rayCoreVersion}" ]]; then
@@ -1445,7 +1445,7 @@ updateV2Ray() {
 		if [[ -n "$1" ]]; then
 			version=$1
 		else
-			version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
+			version=$(curl -s https://api.github.com/repos/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
 		fi
 
 		if [[ -n "${v2rayCoreVersion}" ]]; then
