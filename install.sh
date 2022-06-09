@@ -1267,23 +1267,23 @@ installV2Ray() {
 	if [[ "${coreInstallType}" != "2" && "${coreInstallType}" != "3" ]]; then
 		if [[ "${selectCoreType}" == "2" ]]; then
 
-			version=$(curl -s https://api.github.com/repos/v2fly/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
+			version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
 		else
 			version=${v2rayCoreVersion}
 		fi
 
 		echoContent green " ---> v2ray-core版本:${version}"
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
+			wget -c -q --show-progress -P /etc/v2ray-agent/v2ray/ "https://github.com/SagerNet/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
 		else
-			wget -c -P /etc/v2ray-agent/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
+			wget -c -P /etc/v2ray-agent/v2ray/ "https://github.com/SagerNet/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
 		fi
 
 		unzip -o "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip" -d /etc/v2ray-agent/v2ray >/dev/null
 		rm -rf "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip"
 	else
 		if [[ "${selectCoreType}" == "3" ]]; then
-			echoContent green " ---> 锁定v2ray-core版本为v4.32.1"
+			echoContent green " ---> 锁定v2ray-core版本为v5.0.14"
 			rm -f /etc/v2ray-agent/v2ray/v2ray
 			rm -f /etc/v2ray-agent/v2ray/v2ctl
 			installV2Ray "$1"
@@ -1351,11 +1351,11 @@ v2rayVersionManageMenu() {
 		echoContent yellow "2.不保证回退后一定可以正常使用"
 		echoContent yellow "3.如果回退的版本不支持当前的config，则会无法连接，谨慎操作"
 		echoContent skyBlue "------------------------Version-------------------------------"
-		curl -s https://api.github.com/repos/v2fly/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}'
+		curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}'
 
 		echoContent skyBlue "--------------------------------------------------------------"
 		read -r -p "请输入要回退的版本:" selectV2rayVersionType
-		version=$(curl -s https://api.github.com/repos/v2fly/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}' | grep "${selectV2rayVersionType}:" | awk -F "[:]" '{print $2}')
+		version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}' | grep "${selectV2rayVersionType}:" | awk -F "[:]" '{print $2}')
 		if [[ -n "${version}" ]]; then
 			updateV2Ray "${version}"
 		else
@@ -1421,7 +1421,7 @@ updateV2Ray() {
 		if [[ -n "$1" ]]; then
 			version=$1
 		else
-			version=$(curl -s https://api.github.com/repos/v2fly/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
+			version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
 		fi
 		# 使用锁定的版本
 		if [[ -n "${v2rayCoreVersion}" ]]; then
@@ -1430,9 +1430,9 @@ updateV2Ray() {
 		echoContent green " ---> v2ray-core版本:${version}"
 
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
+			wget -c -q --show-progress -P /etc/v2ray-agent/v2ray/ "https://github.com/SagerNet/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
 		else
-			wget -c -P "/etc/v2ray-agent/v2ray/ https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
+			wget -c -P "/etc/v2ray-agent/v2ray/ https://github.com/SagerNet/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
 		fi
 
 		unzip -o "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip" -d /etc/v2ray-agent/v2ray >/dev/null
@@ -1445,7 +1445,7 @@ updateV2Ray() {
 		if [[ -n "$1" ]]; then
 			version=$1
 		else
-			version=$(curl -s https://api.github.com/repos/v2fly/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
+			version=$(curl -s https://github.com/SagerNet/v2ray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -1)
 		fi
 
 		if [[ -n "${v2rayCoreVersion}" ]]; then
